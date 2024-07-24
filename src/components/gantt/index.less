@@ -2,7 +2,58 @@
     width: 100%;
     height: 500px;
     .ganttContainer {
-        width: 100%;
+        width: 100vw;
+        overflow: hidden;
         height: 100%;
+        // 设置左侧头部数据
+        .gantt_grid_scale {
+            background-color: #dce8ee;
+            .gantt_grid_head_cell {
+                font-size: 14px;
+                font-weight: bold;
+                color: #000;
+            }
+        }
+        // 设置右侧头部数据
+        .gantt_task_scale {
+            background-color: #dce8ee;
+            .gantt_grid_head_top {
+                font-size: 14px !important;
+                font-weight: bold;
+                color: #000;
+            }
+            .gantt_scale_cell {
+                font-size: 10px;
+                font-weight: bold;
+                color: #000;
+            }
+ 
+        }
+        .gantt_task_main_content {
+            background-color: #57ce7d;
+        }
+        
+         // 去除表格单元格的竖线  
+        .gantt_task_cell,  
+        .gantt_task_cell.gantt_cell {  
+            border-right: none !important;
+        }  
+        // 保留左侧标题单元格的竖线  
+        .gantt_grid_head_cell,  
+        .gantt_grid_data .gantt_cell {  
+            border-right: 1px solid #dcdcdc !important; 
+        }  
+        /* 去除左侧标题和右侧表格内容的激活状态样式 */  
+        .gantt_grid_data, .gantt_row.gantt_selected {
+            background-color: transparent !important;
+        }
+     
+        // 去除左侧标题内容的悬停效果
+        .gantt_row:hover {
+            background: none !important; // 去除背景色  
+        }
+        .gantt_row:active {
+            background: none !important; // 去除背景色  
+        }
     }
 }
