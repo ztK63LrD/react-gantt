@@ -1,4 +1,4 @@
-.ganttView {
+.ganttView2 {
     width: 100%;
     height: 250px;
     .ganttContainer {
@@ -29,15 +29,15 @@
             }
  
         }
-        .gantt_task_main_content {
-            background-color: #57ce7d;
-        }
+        // .gantt_task_main_content {
+        //     background-color: #57ce7d;
+        // }
         
          // 去除表格单元格的竖线  
-        .gantt_task_cell,  
-        .gantt_task_cell.gantt_cell {  
-            border-right: none !important;
-        }  
+        // .gantt_task_cell,  
+        // .gantt_task_cell.gantt_cell {  
+        //     border-right: none !important;
+        // }  
         // 保留左侧标题单元格的竖线  
         .gantt_grid_head_cell,  
         .gantt_grid_data .gantt_cell {  
@@ -61,23 +61,18 @@
 // tooltips样式
 .gantt_tooltip {
     background-color: #ccc;
-    .gantt-tooltip-time {
+    .gantt-tooltip-time-space {
         display: flex;
-        flex-direction: column;
-        gap: 4px;
+        align-items: center;
         margin-bottom: 4px;
+        align-items: baseline;
         .time-word {
             color: #000;
             font-size: 12px;
             font-weight: bold;
         }
         .time-value {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            span {
-                font-weight: bold;
-            }
+            color: #000;
         }
     }
     .gantt-tooltip-task {
