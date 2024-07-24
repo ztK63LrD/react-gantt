@@ -7,19 +7,20 @@ const data = {
     // 任务数据
     data: [
         //第一组 整条数据需要带上render属性  里面多段的数据parent执行整条的id
-        { id: 1, name: '张三', render: 'split',  text: '' },
-        { id: 100, parent: 1, text: '派工', color: '#008c8c', start_date: '15-06-2024 08:30', end_date: '15-06-2024: 10:30' },
-        { id: 101, parent: 1, text: '休息', color: 'blue', start_date: '16-06-2024: 13:00', end_date: '16-06-2024:23:00' },
+        { id: '1', name: '张三', render: 'split',  text: '' },
+        { id: '1-1', parent: 1, text: '派工', color: '#008c8c', start_date: '15-06-2024 08:30', end_date: '15-06-2024: 10:30' },
+        { id: '1-2', parent: 1, text: '休息', color: 'blue', start_date: '16-06-2024: 13:00', end_date: '16-06-2024:23:00' },
         
         // 第二组
-        { id: 2, name: '李四', render: 'split', text: '' },
-        { id: 102, parent: 2, text: '派工', color: '#008c8c', start_date: '15-06-2024 18:30', end_date: '15-06-2024: 22:30' },
-        { id: 103, parent: 2, text: '休息', color: 'blue', start_date: '16-06-2024: 13:00', end_date: '16-06-2024:23:00' },
+        { id: '2', name: '李四', render: 'split', text: '' },
+        { id: '2-1', parent: 2, text: '派工', color: '#008c8c', start_date: '15-06-2024 18:30', end_date: '15-06-2024: 22:30' },
+        { id: '2-2', parent: 2, text: '休息', color: 'blue', start_date: '16-06-2024: 13:00', end_date: '16-06-2024:23:00' },
 
         // 第三组
-        { id: 3, name: '王五', render: 'split', text: '' },
-        { id: 104, parent: 3, text: '派工', color: '#008c8c', start_date: '15-06-2024 8:30', end_date: '15-06-2024: 22:30' },
-        { id: 105, parent: 3, text: '休息', color: 'blue', start_date: '15-06-2024: 13:00', end_date: '16-06-2024:23:00' },
+        { id: '3', name: '王五', render: 'split', text: '' },
+        { id: '3-1', parent: 3, text: '派工', color: '#008c8c', start_date: '15-06-2024 8:30', end_date: '15-06-2024: 22:30' },
+        { id: '3-2', parent: 3, text: '休息', color: 'blue', start_date: '15-06-2024: 13:00', end_date: '16-06-2024:23:00' },
+        { id: '3-3', parent: 3, text: '休息', color: 'blue', start_date: '17-06-2024: 13:00', end_date: '17-06-2024:23:00' },
     ],
 };
 
@@ -57,7 +58,7 @@ const GanttView = () => {
                 return date.getHours(); // 显示从0到23的小时范围  
             }}  
         ];
-
+        
         // 表内容样式设置
         gantt.templates.task_row_class = function (start, end, task) { // 设置表主内容背景颜色
             return "gantt_task_main_content";
@@ -67,7 +68,28 @@ const GanttView = () => {
         gantt.templates.task_text = function (start, end, task) {
             return `<div style="color: #fff; font-size: 14px;">${task?.text}</div>`;
         };
-
+        gantt.templates.task_class = function(start, end, task) {  
+            if (task.text) {
+                // if (task.parent === 1) {
+                //     console.log(12);
+                // }
+                if (task.id === '3-1') { // 检查是否为特定任务  
+                    return `custom-height-top`; // 返回自定义CSS类  
+                }  
+                if (task.id === '3-2') {
+                    return `custom-height-bottom    `; // 返回自定义CSS类  
+                }
+                console.log(task);
+            }
+            return ""; // 对于其他任务，不添加特殊类  
+        };  
+        
+        // 设置表内容的进度的样式
+        // gantt.templates.progress_bar = function (start, end, task) {
+        //     console.log(12);
+        //     return `<div class="gantt-progress" style="width: ${task.progress * 100}%;"></div>`;
+        // };
+      
         // tooltips样式设置
         gantt.plugins({ tooltip: true });
         gantt.config.tooltip_offset_x = 10; // 设置tooltips水平偏移量
