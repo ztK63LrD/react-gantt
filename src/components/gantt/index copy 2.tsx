@@ -68,29 +68,6 @@ const GanttView = () => {
             return `<div style="color: #fff; font-size: 14px;">${task?.text}</div>`;
         };
 
-        // tooltips样式设置
-        gantt.plugins({ tooltip: true });
-        gantt.config.tooltip_offset_x = 10; // 设置tooltips水平偏移量
-        gantt.config.tooltip_offset_y = 30; // 设置tooltips垂直偏移量
-        gantt.templates.tooltip_text = function (start: Date, end: Date, task: any): string {
-            if (task.text) {
-                return (
-                    `<div class="gantt-tooltip">
-                        <div class="gantt-tooltip-time">
-                            <div class="time-word">当前时间：</div>
-                            <div class="time-value">
-                                <div class="time-value-content"><span>开始时间：</span>${start.toLocaleString()}</div>
-                                <div class="time-value-content"><span>结束时间：</span>${end.toLocaleString()}</div>
-                            </div>
-                        </div>
-                        <div class="gantt-tooltip-task">
-                            <div class="task-word">当前任务：</div>
-                            <div class="task-value">${task.text}</div>
-                        </div>
-                    </div>`
-                );
-            }
-        };
     }
 
     useEffect(() => {

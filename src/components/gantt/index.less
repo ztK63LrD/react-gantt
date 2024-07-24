@@ -57,3 +57,39 @@
         }
     }
 }
+
+// tooltips样式
+.gantt_tooltip {
+    background-color: #ccc;
+    .gantt-tooltip-time {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 4px;
+        .time-word {
+            color: #000;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .time-value {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            span {
+                font-weight: bold;
+            }
+        }
+    }
+    .gantt-tooltip-task {
+        display: flex;
+        align-items: center;
+        .task-word {
+            color: #000;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .task-value {
+            color: red;
+        }
+    }
+}
