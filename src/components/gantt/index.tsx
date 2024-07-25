@@ -19,8 +19,11 @@ const data = {
         // 第三组
         { id: '3', name: '王五', render: 'split', text: '' },
         { id: '3-1', parent: 3, text: '派工', color: '#008c8c', start_date: '15-06-2024 8:30', end_date: '15-06-2024: 22:30' },
-        { id: '3-2', parent: 3, text: '休息', color: 'blue', start_date: '15-06-2024: 13:00', end_date: '16-06-2024:23:00' },
-        { id: '3-3', parent: 3, text: '休息', color: 'blue', start_date: '17-06-2024: 13:00', end_date: '17-06-2024:23:00' },
+        { id: '3-2', parent: 3, text: '休息', color: 'blue', start_date: '16-06-2024: 13:00', end_date: '16-06-2024:23:00' },
+        { id: '3-3', parent: 3, text: '休息', color: 'blue', start_date: '16-06-2024: 13:00', end_date: '17-06-2024:3:00' },
+        // { id: '3-4', parent: 3, text: '派工', color: '#008c8c', start_date: '17-06-2024:2:00', end_date: '17-06-2024: 8:00' },
+        { id: '3-4', parent: 3, text: '派工', color: '#008c8c', start_date: '16-06-2024:12:00', end_date: '17-06-2024: 8:00' },
+
     ],
 };
 
@@ -51,7 +54,6 @@ const GanttView = () => {
             return "gantt_grid_head_top";
         };
 
-
         gantt.config.scales = [ // 设置甘特图时间轴
             { unit: 'day', step: 1, format: '%Y/%m/%d' },
             { unit: 'hour', step: 1, format: function(date) {  
@@ -66,23 +68,68 @@ const GanttView = () => {
         gantt.config.row_height = 40; // 设置内容行高
         gantt.config.bar_height = 40; // 设置进度条高度
         gantt.templates.task_text = function (start, end, task) {
-            return `<div style="color: #fff; font-size: 14px;">${task?.text}</div>`;
+            return `<div style="color: #fff; font-size: 12px;">${task?.text}</div>`;
         };
+        let count = 0
         gantt.templates.task_class = function(start, end, task) {  
-            if (task.text) {
-                // if (task.parent === 1) {
-                //     console.log(12);
-                // }
-                if (task.id === '3-1') { // 检查是否为特定任务  
-                    return `custom-height-top`; // 返回自定义CSS类  
-                }  
-                if (task.id === '3-2') {
-                    return `custom-height-bottom    `; // 返回自定义CSS类  
-                }
-                console.log(task);
+            if (count < 1) {
+                // 创建一个空对象来存储结果
+                let tasksByParent: { [key: string]: any[] } = {}; // 创建空对象来存储任务按父任务分组的结果
+                // 遍历任务数组
+                data.data.forEach((task) => {
+                    if (task.parent) {
+                        // 检查是否已经存在该parent对应的数组，如果不存在则创建一个空数组
+                        if (!tasksByParent[task.parent]) {
+                            tasksByParent[task.parent] = [];
+                        }
+                        // 将当前任务对象添加到对应parent值的数组中
+                        tasksByParent[task.parent].push(task);
+                    }
+            
+                });
+
+                // 检查时间重叠并添加类名
+                Object.keys(tasksByParent).forEach(parentId => {
+                    let tasks = tasksByParent[parentId];
+                    for (let i = 0; i < tasks.length; i++) {
+                        for (let j = i + 1; j < tasks.length; j++) {
+                            if (tasksOverlap(tasks[i], tasks[j])) {
+                                tasks[i].className = (i % 2 === 0) ? 'custom-height-top2' : 'custom-height-bottom2';
+                                tasks[j].className = (j % 2 === 0) ? 'custom-height-top2' : 'custom-height-bottom2';
+                            }
+                            // if (tasksOverlap(tasks[i], tasks[j])) {
+                            //     // 依次为每个重叠任务分配不同的类名
+                            //     tasks[i].className = (i % 3 === 0) ? 'custom-height-top3' : ((i % 3 === 1) ? 'custom-height-bottom3' : 'custom-height-center3');
+                            //     tasks[j].className = (j % 3 === 0) ? 'custom-height-top3' : ((j % 3 === 1) ? 'custom-height-bottom3' : 'custom-height-center3');
+                            // }
+                        }
+                    }
+
+                    for (let i = 0; i < tasks.length; i++) {
+                        for (let j = i + 1; j < tasks.length; j++) {
+                            for (let k = j + 1; k < tasks.length; k++) {
+                                if (tasksOverlap(tasks[i], tasks[j]) && tasksOverlap(tasks[i], tasks[k]) && tasksOverlap(tasks[j], tasks[k])) {
+                                    // 为每个重叠任务分配不同的类名
+                                    tasks[i].className = 'custom-height-top3';
+                                    tasks[j].className = 'custom-height-bottom3';
+                                    tasks[k].className = 'custom-height-center3';
+                                }
+                            }
+                        }
+                    }
+                    
+                });
+                console.log(tasksByParent);
+                count++;
             }
-            return ""; // 对于其他任务，不添加特殊类  
+            return task.className || ""; // 返回任务的类名，如果没有类名则返回空字符串
         };  
+
+        // 检查两个任务时间段是否有重叠
+        function tasksOverlap(task1: any, task2: any) {
+            return (task1.start_date < task2.end_date && task2.start_date < task1.end_date);
+        }
+        // 检查三个任务时间段是否有重叠
         
         // 设置表内容的进度的样式
         // gantt.templates.progress_bar = function (start, end, task) {
