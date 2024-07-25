@@ -14,16 +14,15 @@ const data = {
         // 第二组
         { id: '2', name: '李四', render: 'split', text: '' },
         { id: '2-1', parent: 2, text: '派工', color: '#008c8c', start_date: '15-06-2024 18:30', end_date: '15-06-2024: 22:30' },
-        { id: '2-2', parent: 2, text: '休息', color: 'blue', start_date: '16-06-2024: 13:00', end_date: '16-06-2024:23:00' },
+        { id: '2-2', parent: 2, text: '休息', color: 'blue', start_date: '15-06-2024: 13:00', end_date: '16-06-2024:23:00' },
 
         // 第三组
         { id: '3', name: '王五', render: 'split', text: '' },
         { id: '3-1', parent: 3, text: '派工', color: '#008c8c', start_date: '15-06-2024 8:30', end_date: '15-06-2024: 22:30' },
-        { id: '3-2', parent: 3, text: '休息', color: 'blue', start_date: '16-06-2024: 13:00', end_date: '16-06-2024:23:00' },
+        { id: '3-2', parent: 3, text: '休息', color: 'blue', start_date: '16-06-2024: 6:00', end_date: '16-06-2024:23:00' },
         { id: '3-3', parent: 3, text: '休息', color: 'blue', start_date: '16-06-2024: 13:00', end_date: '17-06-2024:3:00' },
         // { id: '3-4', parent: 3, text: '派工', color: '#008c8c', start_date: '17-06-2024:2:00', end_date: '17-06-2024: 8:00' },
         { id: '3-4', parent: 3, text: '派工', color: '#008c8c', start_date: '16-06-2024:12:00', end_date: '17-06-2024: 8:00' },
-
     ],
 };
 
@@ -97,11 +96,6 @@ const GanttView = () => {
                                 tasks[i].className = (i % 2 === 0) ? 'custom-height-top2' : 'custom-height-bottom2';
                                 tasks[j].className = (j % 2 === 0) ? 'custom-height-top2' : 'custom-height-bottom2';
                             }
-                            // if (tasksOverlap(tasks[i], tasks[j])) {
-                            //     // 依次为每个重叠任务分配不同的类名
-                            //     tasks[i].className = (i % 3 === 0) ? 'custom-height-top3' : ((i % 3 === 1) ? 'custom-height-bottom3' : 'custom-height-center3');
-                            //     tasks[j].className = (j % 3 === 0) ? 'custom-height-top3' : ((j % 3 === 1) ? 'custom-height-bottom3' : 'custom-height-center3');
-                            // }
                         }
                     }
 
@@ -129,14 +123,6 @@ const GanttView = () => {
         function tasksOverlap(task1: any, task2: any) {
             return (task1.start_date < task2.end_date && task2.start_date < task1.end_date);
         }
-        // 检查三个任务时间段是否有重叠
-        
-        // 设置表内容的进度的样式
-        // gantt.templates.progress_bar = function (start, end, task) {
-        //     console.log(12);
-        //     return `<div class="gantt-progress" style="width: ${task.progress * 100}%;"></div>`;
-        // };
-      
         // tooltips样式设置
         gantt.plugins({ tooltip: true });
         gantt.config.tooltip_offset_x = 10; // 设置tooltips水平偏移量
@@ -174,4 +160,3 @@ const GanttView = () => {
     )
 };
 export default GanttView;
-
