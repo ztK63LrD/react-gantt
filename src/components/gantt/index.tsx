@@ -49,7 +49,7 @@ const GanttView = () => {
         gantt.config.scale_height = 60; // 设置表头高度
         gantt.config.min_column_width = 10; // 设置列最小宽度
         // 设置头部右侧上标题内容背景颜色
-        gantt.templates.scale_cell_class = function (scale) {
+        gantt.templates.scale_cell_class = function () {
             return "gantt_grid_head_top";
         };
 
@@ -61,16 +61,16 @@ const GanttView = () => {
         ];
         
         // 表内容样式设置
-        gantt.templates.task_row_class = function (start, end, task) { // 设置表主内容背景颜色
+        gantt.templates.task_row_class = function () { // 设置表主内容背景颜色
             return "gantt_task_main_content";
         };
         gantt.config.row_height = 40; // 设置内容行高
         gantt.config.bar_height = 40; // 设置进度条高度
-        gantt.templates.task_text = function (start, end, task) {
+        gantt.templates.task_text = function (_start, _end, task) {
             return `<div style="color: #fff; font-size: 12px;">${task?.text}</div>`;
         };
         let count = 0
-        gantt.templates.task_class = function(start, end, task) {  
+        gantt.templates.task_class = function(_start, _end, task) {  
             if (count < 1) {
                 // 创建一个空对象来存储结果
                 let tasksByParent: { [key: string]: any[] } = {}; // 创建空对象来存储任务按父任务分组的结果

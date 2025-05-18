@@ -130,7 +130,7 @@ const GanttView1 = () => {
         gantt.config.scale_height = 60; // 设置表头高度
         gantt.config.min_column_width = 10; // 设置列最小宽度
         // 设置头部右侧上标题内容背景颜色
-        gantt.templates.scale_cell_class = function (scale) {
+        gantt.templates.scale_cell_class = function () {
             return "gantt_grid_head_top";
         };
 
@@ -149,12 +149,12 @@ const GanttView1 = () => {
         ];
 
         // 表内容样式设置
-        gantt.templates.task_row_class = function (start, end, task) { // 设置表主内容背景颜色
+        gantt.templates.task_row_class = function () { // 设置表主内容背景颜色
             return "gantt_task_main_content";
         };
         gantt.config.row_height = 40; // 设置内容行高
         gantt.config.bar_height = 40; // 设置进度条高度
-        gantt.templates.task_text = function (start, end, task) {
+        gantt.templates.task_text = function (_start, _end, task) {
             return `<div style="color: #fff; font-size: 14px;">${task?.text}</div>`;
         };
 
@@ -162,7 +162,7 @@ const GanttView1 = () => {
         gantt.plugins({ tooltip: true });
         gantt.config.tooltip_offset_x = 10; // 设置tooltips水平偏移量
         gantt.config.tooltip_offset_y = 30; // 设置tooltips垂直偏移量
-        gantt.templates.tooltip_text = function (start: Date, end: Date, task: any): string {
+        gantt.templates.tooltip_text = function (start: Date, _end: Date, task: any): string {
             if (task.text) {
                 return (
                     `<div class="gantt-tooltip">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import GanttView from './components/gantt';
 import GanttView1 from './components/gantt1';
 import GanttView2 from './components/gantt2';
